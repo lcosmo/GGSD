@@ -43,7 +43,7 @@ class LaplacianDatasetNX(Dataset):
         self.samples = []
         # print('Point dim {}'.format(self.point_dim))
         self.label = []
-        filename = f"{ds_filename}_{point_dim}_sm{smallest}_sc{scaler}_v08.torch"
+        filename = f"{ds_filename}_{point_dim}_sm{smallest}_sc{scaler}_nf{nodefeatures}.torch"
         if not os.path.isfile(filename):
             print(ds_filename)
             with open( ds_filename+'.pkl', "rb") as f:
@@ -62,7 +62,7 @@ class LaplacianDatasetNX(Dataset):
             
             
             try:
-                aaaa
+                aaa
                 eigen_dic = torch.load(ds_filename+'.eigen')
                 print("Loaded precomuted eigenquantities")
             

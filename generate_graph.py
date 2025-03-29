@@ -21,7 +21,9 @@ from utils.visualization import NonMolecularVisualization
 if not os.path.isdir("./data/model_weights/"):
     gdown.download(id="19mC9gQCpoecBGWaL3__v69Ixu0Rny22r", output="data/model_weights.tar.gz")
     tarfile.open('./data/model_weights.tar.gz') .extractall('./data/') 
-    
+
+nodefeatures = False
+
 diffusion_model_checkpoint = 'data/model_weights/diffusion_sbm_200.ckpt'
 predictor_model_checkpoint = 'data/model_weights/predictor_sbm_200.ckpt'
 
@@ -33,6 +35,7 @@ predictor_model_checkpoint = 'data/model_weights/predictor_proteins.ckpt'
 
 diffusion_model_checkpoint = 'data/model_weights/diffusion_qm9.ckpt'
 predictor_model_checkpoint = 'data/model_weights/predictor_qm9.ckpt'
+nodefeatures = True
 
 device = 'cuda'
 n_graphs = 10
@@ -49,7 +52,7 @@ model_diffusion.to(device)
 
 #load training set and graph's size distribution
 datasetname = model_diffusion.hparams.dataset
-train_set = LaplacianDatasetNX(datasetname,'data/'+datasetname,point_dim=args.k, smallest=args.smallest, split='train')
+train_set = LaplacianDatasetNX(datasetname,'data/'+datasetname,point_dim=args.k, smallest=args.smallest, split='train', nodefeatures = nodefeatures)
 n_nodes = list(train_set.sample_n_nodes(n_graphs-1)) + [train_set.n_max]
 
 start = time.time()
